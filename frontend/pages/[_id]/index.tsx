@@ -33,7 +33,7 @@ export default function Post({ post }) {
   const [salt, setSalt] = useState("");
 
   const router = useRouter();
-  const postId = router.query._id;
+  const postId = router.query._id as any;
 
   const likePost = async () => {
     setIsLiking(true);
@@ -372,14 +372,12 @@ export default function Post({ post }) {
     }
   };
 
-  const handleLike = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleLike = async () => {
     setIsLiking(true);
     likePost();
   };
 
-  const handleDislike = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleDislike = async () => {
     setIsDisliking(true);
     dislikePost();
   };
@@ -436,20 +434,21 @@ export default function Post({ post }) {
                 {post.news}
               </h2>
 
-              <Button onClick={handleLike} size="small">
-                {isLiking ? (
-                  <CircularProgress />
-                ) : (
+              {isLiking ? (
+                <CircularProgress />
+              ) : (
+                <Button onClick={handleLike} size="small">
                   <span>Like {post.likes}</span>
-                )}
-              </Button>
-              <Button onClick={handleDislike} size="small" color="warning">
-                {isDisliking ? (
-                  <CircularProgress />
-                ) : (
+                </Button>
+              )}
+
+              {isDisliking ? (
+                <CircularProgress />
+              ) : (
+                <Button onClick={handleDislike} size="small" color="warning">
                   <span>Dislike {post.dislikes}</span>
-                )}
-              </Button>
+                </Button>
+              )}
 
               <Button onClick={handleDelete} size="small">
                 delete

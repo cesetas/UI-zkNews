@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 
 export default function news({ posts }) {
   const router = useRouter();
-  const { catID } = router.query;
+  const { catID } = router.query as any;
   const filteredPost = posts.filter((post) => {
     return (
       post.location.toLowerCase() === catID ||
